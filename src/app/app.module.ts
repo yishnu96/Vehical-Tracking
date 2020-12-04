@@ -19,6 +19,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { AuthModule } from './modules/auth/auth.module';
 import { AgmCoreModule } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   imports: [
@@ -27,7 +28,7 @@ import { AgmDirectionModule } from 'agm-direction';
     ToastrModule.forRoot(),
     AuthModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyA0pVifSUWG1lOWJsEbXAa6ZTJoIQSM9SU'
+      apiKey: environment.GOOGLE_MAPS_API
     }),
     AgmDirectionModule,
     SharedModule,
