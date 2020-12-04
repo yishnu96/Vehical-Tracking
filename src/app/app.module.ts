@@ -9,16 +9,33 @@ import { AuthHeaderInterceptor } from './interceptors/header.interceptor';
 import { CatchErrorInterceptor } from './interceptors/http-error.interceptor';
 
 import { AppRoutingModule } from './app-routing.module';
-import { HeaderComponent } from './header/header.component';
-import { HomeComponent } from './home/home.component';
-import { AuthService } from './shared/services';
-
-export function appInitializerFactory(authService: AuthService) {
-  return () => authService.checkTheUserOnTheFirstLoad();
-}
+import { HomeComponent } from './modules/layout/home/home.component';
+import { HeaderComponent } from './modules/layout/header/header.component';
+import { UserRoleComponent } from './modules/user-role/user-role.component';
+import { VehicleModule } from './modules/vehicle/vehicle.module';
+import { UserModule } from './modules/user/user.module';
+import { UserRoleModule } from './modules/user-role/user-role.module';
+import { ToastrModule } from 'ngx-toastr';
+import { AuthModule } from './modules/auth/auth.module';
+import { AgmCoreModule } from '@agm/core';
+import { AgmDirectionModule } from 'agm-direction';
 
 @NgModule({
-  imports: [BrowserAnimationsModule, HttpClientModule, SharedModule, AppRoutingModule],
+  imports: [
+    BrowserAnimationsModule,
+    HttpClientModule,
+    ToastrModule.forRoot(),
+    AuthModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyA0pVifSUWG1lOWJsEbXAa6ZTJoIQSM9SU'
+    }),
+    AgmDirectionModule,
+    SharedModule,
+    VehicleModule,
+    UserModule,
+    UserRoleModule,
+    AppRoutingModule
+  ],
   declarations: [AppComponent, HeaderComponent, HomeComponent],
   providers: [
     {
@@ -30,14 +47,8 @@ export function appInitializerFactory(authService: AuthService) {
       provide: HTTP_INTERCEPTORS,
       useClass: CatchErrorInterceptor,
       multi: true,
-    },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: appInitializerFactory,
-      multi: true,
-      deps: [AuthService],
-    },
+    }
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

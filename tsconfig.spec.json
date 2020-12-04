@@ -6,7 +6,8 @@
     "types": [
       "jasmine",
       "node"
-    ]
+    ],
+    "strictPropertyInitialization": false
   },
   "files": [
     "src/test.ts",

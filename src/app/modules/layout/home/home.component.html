@@ -1,0 +1,74 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="card-group w-100">
+      <div class="card">
+        <div class="card-body d-inline">
+          <p><Strong>TOTAL BOREWELL</Strong>: 100</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body d-inline">
+          <p><Strong>READY</Strong>: 100</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body d-inline">
+          <p><Strong>WORK IN PROGRESS</Strong>: 100</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body d-inline">
+          <p><Strong>NOT READY</Strong>: 100</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body d-inline">
+          <p><Strong>PENDING</Strong>: 100</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body d-inline">
+          <p><Strong>VACENT</Strong>: 100</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body d-inline">
+          <p><Strong>REVIEW</Strong>: 100</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-9">
+      <agm-map [latitude]="currentLocation?.lat" [longitude]="currentLocation?.lng" [zoom]="mapsOption.zoom">
+
+        <agm-direction *ngIf="route" [origin]="route.origin" [destination]="route.destination"></agm-direction>
+        <agm-marker [latitude]="currentLocation?.lat" [longitude]="currentLocation?.lng"></agm-marker>
+        <agm-marker *ngFor="let marker of markerArray; let i =index" [latitude]="marker?.lat" [longitude]="marker?.lng">
+        </agm-marker>
+      </agm-map>
+    </div>
+    <div class="col-lg-3">
+      <div class="card">
+        <div class="card-header">
+          <input type="text" placeholder="search .... " class="form-control" (keyup)="search($event)">
+        </div>
+        <div class="card-body">
+          <div class="list-group">
+            <a class="list-group-item list-group-item-action " *ngFor="let vehicle of allVechicles; let i = index;">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{vehicle?.vehicleNumber | titlecase}}</h5>
+                <h5 class="mb-1">{{vehicle?.driver?.fullName | titlecase}}</h5>
+              </div>
+              <p class="mb-1">BARURAJ EAST</p>
+              <div class="d-flex w-100 justify-content-between">
+                <p class="mb-1">{{vehicle?.fuelType?.fuelTypeName | titlecase}}</p>
+                <button class="btn btn-sm btn-primary" (click)="getLocationOfVehicle(vehicle._id)">Track</button>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  secret_key: "some_random_key "
 };

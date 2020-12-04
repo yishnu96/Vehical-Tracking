@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
-import { Observable, BehaviorSubject, EMPTY } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, BehaviorSubject, EMPTY, observable } from 'rxjs';
 import { tap, pluck } from 'rxjs/operators';
-
-import { User } from '@app/shared/interfaces';
-
 import { TokenStorage } from './token.storage';
+import { User } from '../../interfaces';
+import * as CryptoJS from 'crypto-js';
+import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 interface AuthResponse {
   token: string;
@@ -17,84 +18,73 @@ interface AuthResponse {
 export class AuthService {
   private user$ = new BehaviorSubject<User | null>(null);
 
-  constructor(private http: HttpClient, private tokenStorage: TokenStorage) {}
+  constructor(private http: HttpClient, private tokenStorage: TokenStorage, private router: Router,
+    private toasterService: ToastrService) { }
 
-  login(email: string, password: string): Observable<User> {
-    return this.http
-      .post<AuthResponse>('/api/auth/login', { email, password })
-      .pipe(
-        tap(({ token, user }) => {
-          this.setUser(user);
-          this.tokenStorage.saveToken(token);
-        }),
-        pluck('user')
-      );
+  login(loginObj): Observable<any> {
+    return Observable.create(observer => {
+      this.http.post('http://localhost:5000/api/auth/login/', loginObj).subscribe((res: any) => {
+        console.log(res);
+        this.setUser(res.data)
+        this.router.navigateByUrl('')
+        observer.complete();
+      }), (error: HttpErrorResponse) => {
+        observer.next({ error: error });
+        observer.complete();
+      }
+    });
   }
 
-  register(
-    fullname: string,
-    email: string,
-    password: string,
-    repeatPassword: string
-  ): Observable<User> {
-    return this.http
-      .post<AuthResponse>('/api/auth/register', {
-        fullname,
-        email,
-        password,
-        repeatPassword,
-      })
-      .pipe(
-        tap(({ token, user }) => {
-          this.setUser(user);
-          this.tokenStorage.saveToken(token);
-        }),
-        pluck('user')
-      );
+  register(registerObj) {
+    return Observable.create(observer => {
+      this.http.post('http://localhost:5000/api/auth/register/', registerObj).subscribe((res: any) => {
+        console.log(res)
+        this.toasterService.success(res.message, 'Registered');
+        this.router.navigateByUrl('/login')
+        observer.complete();
+      }, (err: HttpErrorResponse) => {
+        this.toasterService.error(err.error.message, 'Error');
+        console.log(err)
+      }), (error: HttpErrorResponse) => {
+        console.log(error);
+        observer.next({ error: error });
+        observer.complete();
+      }
+    });
   }
 
-  setUser(user: User | null): void {
-    if (user) {
-      user.isAdmin = user.roles.includes('admin');
+  isLoggedin() {
+    let user = localStorage.getItem('userObject');
+    if (user) return true;
+    else return false;
+  }
+
+  setUser(user) {
+    let encrypted = CryptoJS.AES.encrypt(JSON.stringify(user), environment.secret_key).toString();
+    if (localStorage.getItem('userObject')) {
+      localStorage.removeItem('userObject');
     }
-
-    this.user$.next(user);
-    window.user = user;
+    localStorage.setItem('userObject', encrypted);
   }
 
-  getUser(): Observable<User | null> {
-    return this.user$.asObservable();
-  }
-
-  me(): Observable<User> {
-    const token: string | null = this.tokenStorage.getToken();
-
-    if (token === null) {
-      return EMPTY;
+  decrypt() {
+    if (localStorage.getItem('userObject')) {
+      let user = localStorage.getItem('userObject');
+      let decrypt = CryptoJS.AES.decrypt(user, environment.secret_key).toString(CryptoJS.enc.Utf8);
+      return JSON.parse(decrypt)
     }
-
-    return this.http.get<AuthResponse>('/api/auth/me').pipe(
-      tap(({ user }) => this.setUser(user)),
-      pluck('user')
-    );
   }
 
   signOut(): void {
-    this.tokenStorage.signOut();
-    this.setUser(null);
-    delete window.user;
+    localStorage.removeItem('userObject');
   }
 
   getAuthorizationHeaders() {
-    const token: string | null = this.tokenStorage.getToken() || '';
-    return { Authorization: `Bearer ${token}` };
+    let user = this.decrypt();
+    if (user) {
+      let token = user.token;
+      return token
+    }
   }
 
-  /**
-   * Let's try to get user's information if he was logged in previously,
-   * thus we can ensure that the user is able to access the `/` (home) page.
-   */
-  checkTheUserOnTheFirstLoad(): Promise<User> {
-    return this.me().toPromise();
-  }
 }

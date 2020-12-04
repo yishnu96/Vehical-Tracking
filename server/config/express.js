@@ -56,6 +56,7 @@ app.use(helmet());
 app.use(cors());
 
 app.use(passport.initialize());
+require('./passport')
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

@@ -1,23 +1,37 @@
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
+const helper = require('../utils/helper');
 const User = require('../models/user.model');
 
-const userSchema = Joi.object({
-  fullname: Joi.string().required(),
-  email: Joi.string().email(),
-  mobileNumber: Joi.string().regex(/^[1-9][0-9]{9}$/),
+const userCreateSchema = Joi.object({
+  fullName: Joi.string().required(),
+  email: Joi.string().email().required(),
   password: Joi.string().required(),
-  repeatPassword: Joi.string().required().valid(Joi.ref('password'))
+  role: Joi.string().required(),
+  isActive: Joi.boolean().required()
 })
 
+const userUpdateSchema = Joi.object({
+  fullName: Joi.string().optional(),
+  email: Joi.string().email().optional(),
+  role: Joi.string().required(),
+  isActive: Joi.boolean().optional()
+})
 
-module.exports = {
-  insert
-}
+const userLoginSchema = Joi.object({
+  password: Joi.string().required(),
+  email: Joi.string().email().required()
+})
 
-async function insert(user) {
-  user = await Joi.validate(user, userSchema, { abortEarly: false });
-  user.hashedPassword = bcrypt.hashSync(user.password, 10);
-  delete user.password;
-  return await new User(user).save();
-}
+const userRegisterSchema = Joi.object({
+  fullName: Joi.string().required(),
+  password: Joi.string().required(),
+  email: Joi.string().email().required()
+})
+
+function verifyCreate(user) { return helper.validator(user, userCreateSchema) }
+function verifyupdate(user) { return helper.validator(user, userUpdateSchema) }
+function verifyLogin(user) { return helper.validator(user, userLoginSchema) }
+function verifyRegister(user) { return helper.validator(user, userRegisterSchema) }
+
+module.exports = { verifyCreate, verifyupdate, verifyLogin, verifyRegister }
