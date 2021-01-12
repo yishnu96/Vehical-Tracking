@@ -47,6 +47,7 @@ router.delete('/:id', (req, res) => {
 router.post("/", async (req, res) => {
   try {
     let result = UserController.verifyCreate(req.body)
+    console.log(result);
     if (!isEmpty(result.errors)) {
       return res.status(400).json({ status: 400, errors: result.errors, data: null, message: "Fields Required" });
     }
@@ -56,7 +57,6 @@ router.post("/", async (req, res) => {
     }
     let newuser = new User(result.data)
     newuser = await newuser.save();
-    newuser = (await newuser.populate('role').execPopulate()).toObject();
     delete newuser.password;
     return res.status(200).json({ status: 200, errors: null, data: newuser, message: "User Added successfully" });
   } catch (err) {

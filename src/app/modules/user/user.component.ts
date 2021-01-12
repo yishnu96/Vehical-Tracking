@@ -13,7 +13,6 @@ import { Subject } from 'rxjs';
 export class UserComponent implements OnInit {
 
   allUsers: any[] = [];
-  allRoles: any[] = [];
   currentIndex: number = 0;
   currentUserId: string = '';
   currentUser: any;
@@ -27,7 +26,6 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllUser();
-    this.getAllRoles();
     this.initUserForm();
   }
 
@@ -59,17 +57,17 @@ export class UserComponent implements OnInit {
         {
           text: 'Excel',
           extend: 'excel',
-          className: 'table-button btn btn-sm button btn-secondary '
+          className: 'table-button btn btn-sm button btn-light '
         },
         {
           extend: 'print',
           text: 'Print',
-          className: 'table-button btn-sm button btn btn-secondary mr-2 '
+          className: 'table-button btn-sm button btn btn-light mr-2 '
         },
         {
           extend: 'pdf',
           text: 'PDF',
-          className: 'table-button btn-sm button btn btn-secondary '
+          className: 'table-button btn-sm button btn btn-light '
         }
       ]
     };
@@ -84,19 +82,9 @@ export class UserComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       fullName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required]),
-      role: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
-      isActive: new FormControl(true)
+      // isActive: new FormControl(true)
     })
-  }
-
-  getAllRoles() {
-    this.allRoles.length = 0;
-    this.mainService.getAllUsersRole().subscribe((res: any) => {
-      console.log(res);
-      this.allRoles = res.data;
-      console.log(this.allRoles);
-    });
   }
 
 

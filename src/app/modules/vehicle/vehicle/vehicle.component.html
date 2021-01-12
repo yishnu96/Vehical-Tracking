@@ -1,139 +1,124 @@
 <div class="container-fluid mt-5">
-    <div class="row">
-        <div class="card w-100">
-            <div class="card-header">
-                <h2 class="float-left">User Vehicle Management</h2>
-                <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#exampleModal">Add
-                    Vehicle</button>
-            </div>
-            <div class="card-body">
-                <table class="table table table-hover table-bordered table-stripped" datatable [dtOptions]="dtOptions"
-                    [dtTrigger]="dtTrigger" id="mainTable">
-                    <thead>
-                        <tr>
-                            <th scope="col">S no.</th>
-                            <th scope="col">Vehicle Name</th>
-                            <th scope="col">Created Date</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let vehicle of allVehicles; let i = index">
-                            <td>{{i+1}}</td>
-                            <td>{{vehicle?.vehicleNumber  | titlecase}}</td>
-                            <td>{{vehicle?.createdAt  | date : "dd/MM/yy"}}</td>
-                            <td [ngClass]="{'bg-danger':!(vehicle?.isActive), 'bg-success':vehicle?.isActive}">
-                                {{vehicle?.isActive ? 'Active' : 'Inactive'}}</td>
-                            <td>
-                                <a class="btn btn-primary btn-sm mx-1" (click)="editVehicle(i)">Edit</a>
-                                <a class="btn btn-primary btn-sm mx-1" (click)="deleteVehicle(i)">Delete</a>
-                                <a class="btn btn-primary btn-sm mx-1" (click)="generateLocations(i)">Generate Location</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="row">
-                </div>
-            </div>
+  <div class="row">
+      <div class="card text-white bg-dark w-100 mx-auto">
+        <div class="card-header">
+          <h4 class="float-left">User Vehicle Management</h4>
+          <button class="btn btn-light btn-sm float-right" data-toggle="modal" data-target="#exampleModal">Add
+            Vehicle</button>
         </div>
+        <div class="card-body">
+          <table class="table text-white table table-hover table-bordered table-stripped" datatable [dtOptions]="dtOptions"
+            [dtTrigger]="dtTrigger" id="mainTable">
+            <thead>
+              <tr>
+                <th scope="col">S no.</th>
+                <th scope="col">Vehicle Number</th>
+                <th scope="col"> Driver Assign</th>
+                <th scope="col"> Fuel Type</th>
+                <th scope="col"> Model Name </th>
+                <th scope="col"> Type </th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let vehicle of allVehicles; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{vehicle?.vehicleNumber | uppercase}}</td>
+                <td> {{vehicle?.driver?.fullName}} </td>
+                <td> {{vehicle?.fuelType?.fuelTypeName}} </td>
+                <td> {{vehicle?.vehicleType?.vehicleName}} </td>
+                <td> {{vehicle?.vehicleType?.vehicleTypeName}} </td>
+                <td>
+                  <a class="btn btn-light btn-sm mx-1" (click)="editVehicle(i)">Edit</a>
+                  <a class="btn btn-light btn-sm mx-1" (click)="deleteVehicle(i)">Delete</a>
+                  <a class="btn btn-light btn-sm mx-1" (click)="generateLocations(i)">Generate Location</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 </div>
 
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add New Vehicle</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-white bg-dark">
+        <h5 class="modal-title text-center" id="exampleModalLabel">Add New Vehicle</h5>
+        <button type="button" class="close white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-white bg-dark">
+        <div class="card bg-secondary">
+          <div class="card-body">
+            <form [formGroup]="VehicleForm" (ngSubmit)="onSubmit()">
+              <div class="container" style="margin: 0;padding: 0;">
+                <div class="form-group text-center">
+                  <label for="exampleInputEmail1"><b> Vehicle Number </b> </label>
+                  <input type="text" class="form-control" placeholder="MX000058 "
+                    formControlName="vehicleNumber" required
+                    [ngClass]="{ 'is-invalid': submitted && f.vehicleNumber.errors }">
+                  <div *ngIf="submitted && f.vehicleNumber.errors" class="invalid-feedback">
+                    <div *ngIf="f.vehicleNumber.errors.required"> Is
+                      Required</div>
+                  </div>
+                </div>
+                <div class="form-group text-center">
+                  <label for="exampleInputEmail1"><b>Driver</b> </label>
+                  <select name="" id="" class="form-control" formControlName="driver" required
+                    [ngClass]="{ 'is-invalid': submitted && f.driver.errors }">
+                    <option value="" selected disabled>Select Driver</option>
+                    <option value="{{driver._id}}" *ngFor="let driver of allDrivers; let i = index;">
+                      {{driver?.fullName | titlecase}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.driver.errors" class="invalid-feedback">
+                    <div *ngIf="f.driver.errors.required">Driver Is Required</div>
+                  </div>
+                </div>
+                <div class="form-group text-center">
+                  <label for="exampleInputEmail1"><b>Vehicle Type </b> </label>
+                  <select name="" id="" class="form-control" formControlName="vehicleType" required
+                    [ngClass]="{ 'is-invalid': submitted && f.vehicleType.errors }">
+                    <option value="" selected disabled>Select Vechicle Type</option>
+                    <option value="{{vehicle._id}}" *ngFor="let vehicle of allVehicleTypes; let i = index;">
+                       <strong> {{vehicle?.vehicleName | titlecase}} </strong> | Type: {{vehicle.vehicleTypeName | titlecase}} </option>
+                  </select>
+                  <div *ngIf="submitted && f.vehicleType.errors" class="invalid-feedback">
+                    <div *ngIf="f.vehicleType.errors.required">Vehicle Type Is
+                      Required</div>
+                  </div>
+                </div>
+                <div class="form-group text-center">
+                  <label for="exampleInputEmail1"><b>Fuel </b> </label>
+                  <select name="" id="" class="form-control" formControlName="fuelType" required
+                    [ngClass]="{ 'is-invalid': submitted && f.fuelType.errors }">
+                    <option value="" selected disabled>Select Fuel Type</option>
+                    <option value="{{fuel._id}}" *ngFor="let fuel of allFuels; let i = index;">
+                      {{fuel?.fuelTypeName | titlecase}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.fuelType.errors" class="invalid-feedback">
+                    <div *ngIf="f.fuelType.errors.required">Fuel Is Required</div>
+                  </div>
+                </div>
+              </div>
+              <div class=" text-center">
+                <button type="submit" class="btn btn-light tx-13 mx-1" *ngIf="!uploading">Save</button>
+                <button class="btn btn-light" type="button" disabled *ngIf="uploading">
+                  <span class="spinner-border spinner-border-sm" vehicle="status" aria-hidden="true"></span>
+                  Saving...
                 </button>
-            </div>
-            <div class="modal-body">
-                <div class="card">
-                    <div class="card-body">
-                        <form [formGroup]="VehicleForm" (ngSubmit)="onSubmit()">
-                            <div class="container" style="margin: 0;padding: 0;">
-                                <div class="form-group text-center">
-                                    <label for="exampleInputEmail1"><b>Vehicle Name</b> </label>
-                                    <input type="text" class="form-control" placeholder="Vehicle  Name Here "
-                                        formControlName="vehicleNumber" required
-                                        [ngClass]="{ 'is-invalid': submitted && f.vehicleNumber.errors }">
-                                    <div *ngIf="submitted && f.vehicleNumber.errors" class="invalid-feedback">
-                                        <div *ngIf="f.vehicleNumber.errors.required">vehicle Name Is
-                                            Required</div>
-                                    </div>
-                                </div>
-                                <div class="form-group text-center">
-                                    <label for="exampleInputEmail1"><b>Driver</b> </label>
-                                    <select name="" id="" class="form-control" formControlName="driver" required
-                                        [ngClass]="{ 'is-invalid': submitted && f.driver.errors }">
-                                        <option value="" selected disabled>Select Driver</option>
-                                        <option value="{{driver._id}}"
-                                            *ngFor="let driver of allDrivers; let i = index;">
-                                            {{driver?.fullName | titlecase}}</option>
-                                    </select>
-                                    <div *ngIf="submitted && f.driver.errors" class="invalid-feedback">
-                                        <div *ngIf="f.driver.errors.required">Driver Is Required</div>
-                                    </div>
-                                </div>
-                                <div class="form-group text-center">
-                                    <label for="exampleInputEmail1"><b>Vehicle Type </b> </label>
-                                    <select name="" id="" class="form-control" formControlName="vehicleType" required
-                                        [ngClass]="{ 'is-invalid': submitted && f.vehicleType.errors }">
-                                        <option value="" selected disabled>Select Vechicle Type</option>
-                                        <option value="{{vehicle._id}}"
-                                            *ngFor="let vehicle of allVehicleTypes; let i = index;">
-                                            {{vehicle?.vehicleTypeName | titlecase}}</option>
-                                    </select>
-                                    <div *ngIf="submitted && f.vehicleType.errors" class="invalid-feedback">
-                                        <div *ngIf="f.vehicleType.errors.required">Vehicle Type Is
-                                            Required</div>
-                                    </div>
-                                </div>
-                                <div class="form-group text-center">
-                                    <label for="exampleInputEmail1"><b>Fuel </b> </label>
-                                    <select name="" id="" class="form-control" formControlName="fuelType" required
-                                        [ngClass]="{ 'is-invalid': submitted && f.fuelType.errors }">
-                                        <option value="" selected disabled>Select Fuel Type</option>
-                                        <option value="{{fuel._id}}" *ngFor="let fuel of allFuels; let i = index;">
-                                            {{fuel?.fuelTypeName | titlecase}}</option>
-                                    </select>
-                                    <div *ngIf="submitted && f.fuelType.errors" class="invalid-feedback">
-                                        <div *ngIf="f.fuelType.errors.required">Fuel Is Required</div>
-                                    </div>
-                                </div>
-                                <div class="form-group text-center">
-                                    <label for="exampleInputEmail1"> <b>Is Active</b> </label>
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="customSwitch1"
-                                            formControlName="isActive">
-                                        <label class="custom-control-label" for="customSwitch1">Is Active</label>
-                                    </div>
-                                    <div *ngIf="submitted && f.vehicleNumber.errors" class="invalid-feedback">
-                                        <div *ngIf="f.vehicleNumber.errors.required">Status Required</div>
-                                    </div>
-                                </div>
-                                <br>
-                            </div>
-                            <div class=" text-center">
-                                <button type="submit" class="btn btn-primary tx-13 mx-1"
-                                    *ngIf="!uploading">Save</button>
-                                <button class="btn btn-primary" type="button" disabled *ngIf="uploading">
-                                    <span class="spinner-border spinner-border-sm" vehicle="status"
-                                        aria-hidden="true"></span>
-                                    Saving...
-                                </button>
-                            </div>
-                            <!-- <div class="text-center">
-                  <button type="submit" class="btn btn-primary tx-13 mx-1">Save</button>
+              </div>
+              <!-- <div class="text-center">
+                  <button type="submit" class="btn btn-light tx-13 mx-1">Save</button>
                   <button type="button" class="btn btn-secondary tx-13" data-dismiss="modal">Close</button>
                 </div> -->
-                        </form>
-                    </div>
-                </div>
-            </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

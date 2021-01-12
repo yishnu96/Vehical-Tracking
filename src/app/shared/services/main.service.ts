@@ -9,7 +9,6 @@ import { TokenStorage } from './auth/token.storage';
 export class MainService {
 
   userUrl = "http://localhost:5000/api/user";
-  roleUrl = "http://localhost:5000/api/role";
   fuelUrl = "http://localhost:5000/api/fuel";
   vehicleTypeUrl = "http://localhost:5000/api/vehicletype";
   vehicleUrl = "http://localhost:5000/api/vehicle";
@@ -41,23 +40,6 @@ export class MainService {
     return this.http.delete(this.userUrl + '/' + id, { headers: this.headers });
   }
 
-  //ROLE
-  addUserRole(obj: any) {
-    return this.http.post(this.roleUrl, obj, { headers: this.headers });
-  }
-
-  getAllUsersRole() {
-
-    return this.http.get(this.roleUrl, { headers: this.headers });
-  }
-
-  updateUserRole(obj: any, id: string) {
-    return this.http.put(this.roleUrl + '/' + id, obj, { headers: this.headers });
-  }
-
-  deleteUserRole(id: string) {
-    return this.http.delete(this.roleUrl + '/' + id, { headers: this.headers });
-  }
 
   //Vehicle
   addVehicle(obj: any) {

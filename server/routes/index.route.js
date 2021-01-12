@@ -4,7 +4,6 @@ const fuelRoutes = require('./fuel.route');
 const vehicleRoutes = require('./vehicle.route');
 const vehicletypeRoutes = require('./vehicle-type.route');
 const locationRoutes = require('./location.route');
-const roleRoutes = require('./role.route');
 const authRoutes = require('./auth.route');
 
 const authMiddleware = require('../middleware/authMiddleware')();

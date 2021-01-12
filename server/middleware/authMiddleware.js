@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
 module.exports = (forRegister) => {
+  console.log(forRegister);
     return function (req, res, next) {
         if (req.headers.token) {
             if (typeof req.headers.token == "string" && req.headers.token.trim() !== "") {
@@ -8,12 +9,12 @@ module.exports = (forRegister) => {
                     if (err) {
                         return res.status(401).json({ status: 401, errors: true, data: null, message: "Invalid token" });
                     } else {
-                        User.findById(payload.user).populate("role").lean().exec().then(d => {
+                        User.findById(payload.user).lean().exec().then(d => {
                             if (d) {
                                 delete d.password;
-                                if (forRegister && d.isActive)
+                                if (forRegister)
                                     return res.status(200).json({ status: 401, errors: false, data: { user: d }, message: "You are already logged in" });
-                                if (forRegister || (!d.isActive))
+                                if (forRegister)
                                     return res.status(401).json({ status: 401, errors: false, data: null, message: "Your account has been disabled" });
                                 req.user = d;
                                 next();

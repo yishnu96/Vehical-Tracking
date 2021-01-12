@@ -1,130 +1,96 @@
 <div class="container-fluid mt-5">
-    <div class="row">
-        <div class="card w-100">
-            <div class="card-header">
-                <h2 class="float-left">User Management</h2>
-                <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#exampleModal">Add
-                    User</button>
-            </div>
-            <div class="card-body">
-                <table class="table table table-hover table-bordered table-stripped" datatable [dtOptions]="dtOptions"
-                    [dtTrigger]="dtTrigger" id="mainTable">
-                    <thead>
-                        <tr>
-                            <th scope="col">S no.</th>
-                            <th scope="col">User Type Name</th>
-                            <th scope="col">Created Date</th>
-                            <th scope="col">Role</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let user of allUsers; let i = index">
-                            <td>{{i+1}}</td>
-                            <td>{{user?.fullName  | titlecase}}</td>
-                            <td>{{user?.createdAt  | date : "dd/MM/yy"}}</td>
-                            <td>{{user?.role?.roleName  | titlecase}}</td>
-                            <td [ngClass]="{'bg-danger':!(user?.isActive), 'bg-success':user?.isActive}">
-                                {{user?.isActive ? 'Active' : 'Inactive'}}</td>
-                            <td>
-                                <a class="btn btn-primary btn-sm mx-1" (click)="editUser(i)" data-toggle="modal" data-target="#exampleModal">Edit</a>
-                                <a class="btn btn-primary btn-sm mx-1" (click)="deleteUser(i)" >Delete</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="row">
-                </div>
-            </div>
+  <div class="row">
+  <div class="col-md-8 col-sm-12 col-lg-8">
+    <div class="card text-white bg-secondary">
+      <div class="card-header">
+        <h4 class="float-left">User Management</h4>
+      </div>
+      <div class="card-body text-white">
+        <table class="table text-white table table-hover table-bordered table-stripped" datatable [dtOptions]="dtOptions"
+          [dtTrigger]="dtTrigger" id="mainTable">
+          <thead>
+            <tr>
+              <th scope="col">S no.</th>
+              <th scope="col">User Type Name</th>
+              <th scope="col">Created Date</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of allUsers; let i = index">
+              <td>{{i+1}}</td>
+              <td>{{user?.fullName | titlecase}}</td>
+              <td>{{user?.createdAt | date : "dd/MM/yy"}}</td>
+              <td>
+                <a class="btn btn-light btn-sm mx-1" (click)="editUser(i)" data-toggle="modal"
+                  data-target="#exampleModal">Edit</a>
+                <a class="btn btn-light btn-sm mx-1" (click)="deleteUser(i)">Delete</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="row">
         </div>
+      </div>
     </div>
-</div>
-
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add New User</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+  </div>
+  <div class="col-md-4 col-lg-4 col-sm-12">
+    <div class="card text-white bg-dark mb-3">
+      <div class="card-header text-center ">Add Driver</div>
+      <div class="card-body">
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+          <div class="container" style="margin: 0;padding: 0;">
+            <div class="form-group text-center">
+              <label for="exampleInputEmail1"><b>Driver Name</b> </label>
+              <input type="text" class="form-control" placeholder="Enter Name Here.." formControlName="fullName"
+                required [ngClass]="{ 'is-invalid': submitted && f.fullName.errors }">
+              <div *ngIf="submitted && f.fullName.errors" class="invalid-feedback">
+                <div *ngIf="f.fullName.errors.required">Full Name Name Is
+                  Required</div>
+              </div>
             </div>
-            <div class="modal-body">
-                <div class="card">
-                    <div class="card-body">
-                        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-                            <div class="container" style="margin: 0;padding: 0;">
-                                <div class="form-group text-center">
-                                    <label for="exampleInputEmail1"><b>User Name</b> </label>
-                                    <input type="text" class="form-control" placeholder="User Type Name Here "
-                                        formControlName="fullName" required
-                                        [ngClass]="{ 'is-invalid': submitted && f.fullName.errors }">
-                                    <div *ngIf="submitted && f.fullName.errors" class="invalid-feedback">
-                                        <div *ngIf="f.fullName.errors.required">Full Name Name Is
-                                            Required</div>
-                                    </div>
-                                </div>
-                                <div class="form-group text-center">
-                                    <label for="exampleInputEmail1"><b>Email</b> </label>
-                                    <input type="text" class="form-control" placeholder="Email Here "
-                                        formControlName="email" required
-                                        [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
-                                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                                        <div *ngIf="f.email.errors.required">Email Is Required</div>
-                                    </div>
-                                </div>
-                                <div class="form-group text-center">
-                                    <label for="exampleInputEmail1"><b>Password</b> </label>
-                                    <input type="password" class="form-control" placeholder="password Here "
-                                        formControlName="password" required
-                                        [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
-                                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                                        <div *ngIf="f.password.errors.required">password Is Required</div>
-                                    </div>
-                                </div>
-                                <div class="form-group text-center">
-                                    <label for="exampleInputEmail1"><b>Role </b> </label>
-                                    <select name="" id="" class="form-control" formControlName="role" required
-                                        [ngClass]="{ 'is-invalid': submitted && f.role.errors }">
-                                        <option value="{{role._id}}" *ngFor="let role of allRoles; let i = index;">
-                                            {{role?.roleName | titlecase}}</option>
-                                    </select>
-                                    <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
-                                        <div *ngIf="f.role.errors.required">Role Is Required</div>
-                                    </div>
-                                </div>
-                                <div class="form-group text-center">
-                                    <label for="exampleInputEmail1"> <b>Is Active</b> </label>
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="customSwitch1"
-                                            formControlName="isActive">
-                                        <label class="custom-control-label" for="customSwitch1">Is Active</label>
-                                    </div>
-                                    <div *ngIf="submitted && f.isActive.errors" class="invalid-feedback">
-                                        <div *ngIf="f.isActive.errors.required">Is Active Is Required</div>
-                                    </div>
-                                </div>
-                                <br>
-                            </div>
-                            <div class=" text-center">
-                                <button type="submit" class="btn btn-primary tx-13 mx-1"
-                                    *ngIf="!uploading">Save</button>
-                                <button class="btn btn-primary" type="button" disabled *ngIf="uploading">
-                                    <span class="spinner-border spinner-border-sm" user="status"
-                                        aria-hidden="true"></span>
-                                    Saving...
-                                </button>
-                            </div>
-                            <!-- <div class="text-center">
-                  <button type="submit" class="btn btn-primary tx-13 mx-1">Save</button>
-                  <button type="button" class="btn btn-secondary tx-13" data-dismiss="modal">Close</button>
-                </div> -->
-                        </form>
-                    </div>
-                </div>
+            <div class="form-group text-center">
+              <label for="exampleInputEmail1"><b>Email</b> </label>
+              <input type="text" class="form-control" placeholder="Email Here " formControlName="email" required
+                [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+              <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors.required">Email Is Required</div>
+              </div>
             </div>
-        </div>
+            <div class="form-group text-center">
+              <label for="exampleInputEmail1"><b>Password</b> </label>
+              <input type="password" class="form-control" placeholder="password Here " formControlName="password"
+                required [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+              <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">password Is Required</div>
+              </div>
+            </div>
+            <!-- <div class="form-group text-center">
+              <label for="exampleInputEmail1"> <b>Is Active</b> </label>
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="customSwitch1" formControlName="isActive">
+                <label class="custom-control-label" for="customSwitch1">Is Active</label>
+              </div>
+              <div *ngIf="submitted && f.isActive.errors" class="invalid-feedback">
+                <div *ngIf="f.isActive.errors.required">Is Active Is Required</div>
+              </div>
+            </div> -->
+            <br>
+          </div>
+          <div class=" text-center">
+            <button type="submit" class="btn btn-light tx-13 mx-1" *ngIf="!uploading">Save</button>
+            <button class="btn btn-primary" type="button" disabled *ngIf="uploading">
+              <span class="spinner-border spinner-border-sm" user="status" aria-hidden="true"></span>
+              Saving...
+            </button>
+          </div>
+          <!-- <div class="text-center">
+      <button type="submit" class="btn btn-primary tx-13 mx-1">Save</button>
+      <button type="button" class="btn btn-secondary tx-13" data-dismiss="modal">Close</button>
+    </div> -->
+        </form>
+      </div>
     </div>
+  </div>
+  </div>
 </div>

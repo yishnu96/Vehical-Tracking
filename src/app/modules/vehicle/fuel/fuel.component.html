@@ -1,19 +1,18 @@
 <div class="container-fluid mt-5">
     <div class="row">
         <div class="col-sm-12 col-md-8">
-            <div class="card">
+            <div class="card text-white bg-secondary">
                 <div class="card-header">
-                    <h2 class="float-left">User Fuel Management</h2>
+                    <h4 class="float-left">User Fuel Management</h4>
                 </div>
                 <div class="card-body">
-                    <table class="table table table-hover table-bordered table-stripped" datatable
+                    <table class="table table text-white table-hover table-bordered table-stripped" datatable
                         [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="mainTable">
                         <thead>
                             <tr>
                                 <th scope="col">S no.</th>
                                 <th scope="col">Fuel Name</th>
                                 <th scope="col">Created Date</th>
-                                <th scope="col">Status</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
@@ -22,12 +21,9 @@
                                 <td>{{i+1}}</td>
                                 <td>{{fuel?.fuelTypeName  | titlecase}}</td>
                                 <td>{{fuel?.createdAt  | date : "dd/MM/yy"}}</td>
-                                <td
-                                    [ngClass]="{'bg-danger':!(fuel?.isActive), 'bg-success':fuel?.isActive}">
-                                    {{fuel?.isActive ? 'Active' : 'Inactive'}}</td>
                                 <td>
-                                    <a class="btn btn-primary btn-sm mx-1" (click)="editVehicleType(i)">Edit</a>
-                                    <a class="btn btn-primary btn-sm mx-1" (click)="deleteVehicleType(i)">Delete</a>
+                                    <a class="btn btn-light btn-sm mx-1" (click)="editVehicleType(i)">Edit</a>
+                                    <a class="btn btn-light btn-sm mx-1" (click)="deleteVehicleType(i)">Delete</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -38,9 +34,9 @@
             </div>
         </div>
         <div class="col-sm-12 col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Add New Fuel</h3>
+            <div class="card  text-white bg-dark">
+                <div class="card-header text-center">
+                    <h5>Add New Fuel</h5>
                 </div>
                 <div class="card-body">
                     <form [formGroup]="fuelTypeForm" (ngSubmit)="onSubmit()">
@@ -48,21 +44,9 @@
                             <div class="form-group text-center">
                                 <label for="exampleInputEmail1"><b>Fuel
                                         Name</b> </label>
-                                <input type="text" class="form-control" placeholder="Fuel Name Here "
+                                <input  type="text" class="form-control" placeholder="Fuel Name Here "
                                     formControlName="fuelTypeName" required
                                     [ngClass]="{ 'is-invalid': submitted && f.fuelTypeName.errors }">
-                                <div *ngIf="submitted && f.fuelTypeName.errors" class="invalid-feedback">
-                                    <div *ngIf="f.fuelTypeName.errors.required">fuel Name Is
-                                        Required</div>
-                                </div>
-                            </div>
-                            <div class="form-group text-center">
-                                <label for="exampleInputEmail1"> <b>Is Active</b> </label>
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="customSwitch1"
-                                        formControlName="isActive">
-                                    <label class="custom-control-label" for="customSwitch1">Is Active</label>
-                                </div>
                                 <div *ngIf="submitted && f.fuelTypeName.errors" class="invalid-feedback">
                                     <div *ngIf="f.fuelTypeName.errors.required">fuel Name Is
                                         Required</div>
@@ -72,7 +56,7 @@
                         </div>
                         <div class=" text-center">
                             <button type="submit" class="btn btn-primary tx-13 mx-1" *ngIf="!uploading">Save</button>
-                            <button class="btn btn-primary" type="button" disabled *ngIf="uploading">
+                            <button class="btn btn-light" type="button" disabled *ngIf="uploading">
                                 <span class="spinner-border spinner-border-sm" fuel="status"
                                     aria-hidden="true"></span>
                                 Saving...

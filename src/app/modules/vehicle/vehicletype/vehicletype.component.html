@@ -1,90 +1,81 @@
 <div class="container-fluid mt-5">
-    <div class="row">
-        <div class="col-sm-12 col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="float-left">User Vehicle Type Management</h2>
-                </div>
-                <div class="card-body">
-                    <table class="table table table-hover table-bordered table-stripped" datatable
-                        [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="mainTable">
-                        <thead>
-                            <tr>
-                                <th scope="col">S no.</th>
-                                <th scope="col">Vehicle Type Name</th>
-                                <th scope="col">Created Date</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let vehicleType of allVehicleTypes; let i = index">
-                                <td>{{i+1}}</td>
-                                <td>{{vehicleType?.vehicleTypeName  | titlecase}}</td>
-                                <td>{{vehicleType?.createdAt  | date : "dd/MM/yy"}}</td>
-                                <td
-                                    [ngClass]="{'bg-danger':!(vehicleType?.isActive), 'bg-success':vehicleType?.isActive}">
-                                    {{vehicleType?.isActive ? 'Active' : 'Inactive'}}</td>
-                                <td>
-                                    <a class="btn btn-primary btn-sm mx-1" (click)="editVehicleType(i)">Edit</a>
-                                    <a class="btn btn-primary btn-sm mx-1" (click)="deleteVehicleType(i)">Delete</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="row">
-                    </div>
-                </div>
-            </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-8">
+      <div class="card text-white bg-secondary">
+        <div class="card-header">
+          <h4 class="float-left">User Vehicle Type Management</h4>
         </div>
-        <div class="col-sm-12 col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Add New Vehicle Type</h3>
+        <div class="card-body">
+          <table class="table table text-white table-hover table-bordered table-stripped" datatable
+            [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="mainTable">
+            <thead>
+              <tr>
+                <th scope="col">S no.</th>
+                <th scope="col"> Vehicle Modal Name </th>
+                <th scope="col">Vehicle Type</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let vehicleType of allVehicleTypes; let i = index">
+                <td>{{i+1}}</td>
+                <td> {{vehicleType?.vehicleName | titlecase}} </td>
+                <td>{{vehicleType?.vehicleTypeName | titlecase}}</td>
+                <td>
+                  <a class="btn btn-light btn-sm mx-1" (click)="editVehicleType(i)">Edit</a>
+                  <a class="btn btn-light btn-sm mx-1" (click)="deleteVehicleType(i)">Delete</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-4">
+      <div class="card text-white bg-dark">
+        <div class="card-header">
+          <h2>Add New Vehicle</h2>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="vehicleTypeForm" (ngSubmit)="onSubmit()">
+            <div class="container" style="margin: 0;padding: 0;">
+              <div class="form-group text-center">
+                <label for="exampleInputEmail1"><b> Model Name </b> </label>
+                <input type="text" class="form-control" placeholder="Vehicle Type Name Here "
+                  formControlName="vehicleName" required
+                  [ngClass]="{ 'is-invalid': submitted && f.vehicleName.errors }">
+                <div *ngIf="submitted && f.vehicleName.errors" class="invalid-feedback">
+                  <div *ngIf="f.vehicleName.errors.required">Model Name Is Required</div>
                 </div>
-                <div class="card-body">
-                    <form [formGroup]="vehicleTypeForm" (ngSubmit)="onSubmit()">
-                        <div class="container" style="margin: 0;padding: 0;">
-                            <div class="form-group text-center">
-                                <label for="exampleInputEmail1"><b>Vehicle Type
-                                        Name</b> </label>
-                                <input type="text" class="form-control" placeholder="Vehicle Type Name Here "
-                                    formControlName="vehicleTypeName" required
-                                    [ngClass]="{ 'is-invalid': submitted && f.vehicleTypeName.errors }">
-                                <div *ngIf="submitted && f.vehicleTypeName.errors" class="invalid-feedback">
-                                    <div *ngIf="f.vehicleTypeName.errors.required">vehicleType Name Is
-                                        Required</div>
-                                </div>
-                            </div>
-                            <div class="form-group text-center">
-                                <label for="exampleInputEmail1"> <b>Is Active</b> </label>
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="customSwitch1"
-                                        formControlName="isActive">
-                                    <label class="custom-control-label" for="customSwitch1">Is Active</label>
-                                </div>
-                                <div *ngIf="submitted && f.vehicleTypeName.errors" class="invalid-feedback">
-                                    <div *ngIf="f.vehicleTypeName.errors.required">vehicleType Name Is
-                                        Required</div>
-                                </div>
-                            </div>
-                            <br>
-                        </div>
-                        <div class=" text-center">
-                            <button type="submit" class="btn btn-primary tx-13 mx-1" *ngIf="!uploading">Save</button>
-                            <button class="btn btn-primary" type="button" disabled *ngIf="uploading">
-                                <span class="spinner-border spinner-border-sm" vehicleType="status"
-                                    aria-hidden="true"></span>
-                                Saving...
-                            </button>
-                        </div>
-                        <!-- <div class="text-center">
+              </div>
+              <div class="form-group text-center">
+                <label for="exampleInputEmail1"><b> Model Type </b> </label>
+                <input type="text" class="form-control" placeholder="Vehicle Type Name Here "
+                  formControlName="vehicleTypeName" required
+                  [ngClass]="{ 'is-invalid': submitted && f.vehicleTypeName.errors }">
+                <div *ngIf="submitted && f.vehicleTypeName.errors" class="invalid-feedback">
+                  <div *ngIf="f.vehicleTypeName.errors.required">Model Type Is
+                    Required</div>
+                </div>
+              </div>
+              <br>
+            </div>
+            <div class=" text-center">
+              <button type="submit" class="btn btn-primary tx-13 mx-1" *ngIf="!uploading">Save</button>
+              <button class="btn btn-primary" type="button" disabled *ngIf="uploading">
+                <span class="spinner-border spinner-border-sm" vehicleType="status" aria-hidden="true"></span>
+                Saving...
+              </button>
+            </div>
+            <!-- <div class="text-center">
                   <button type="submit" class="btn btn-primary tx-13 mx-1">Save</button>
                   <button type="button" class="btn btn-secondary tx-13" data-dismiss="modal">Close</button>
                 </div> -->
-                    </form>
-                </div>
-            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </div>

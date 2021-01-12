@@ -6,14 +6,12 @@ const User = require('../models/user.model');
 const userCreateSchema = Joi.object({
   fullName: Joi.string().required(),
   email: Joi.string().email().required(),
-  password: Joi.string().required(),
-  role: Joi.string().required()
+  password: Joi.string().required()
 })
 
 const userUpdateSchema = Joi.object({
   fullName: Joi.string().optional(),
-  email: Joi.string().email().optional(),
-  role: Joi.string().required()
+  email: Joi.string().email().optional()
 })
 
 const userLoginSchema = Joi.object({

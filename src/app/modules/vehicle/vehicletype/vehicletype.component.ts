@@ -59,7 +59,7 @@ export class VehicletypeComponent implements OnInit {
         {
           text: 'Excel',
           extend: 'excel',
-          className: ' btn btn-sm button btn-outline-primary ',
+          className: ' btn btn-sm button btn-outline-light ',
           exportOptions: {
             columns: 'th:not(:last-child)'
           }
@@ -67,7 +67,7 @@ export class VehicletypeComponent implements OnInit {
         {
           extend: 'print',
           text: 'Print',
-          className: ' btn-sm button btn  btn-outline-primary ',
+          className: ' btn-sm button btn  btn-outline-light ',
           exportOptions: {
             columns: 'th:not(:last-child)'
           }
@@ -75,7 +75,7 @@ export class VehicletypeComponent implements OnInit {
         {
           extend: 'copy',
           text: 'Copy',
-          className: ' btn-sm button btn  btn-outline-primary ',
+          className: ' btn-sm button btn  btn-outline-light ',
           exportOptions: {
             columns: 'th:not(:last-child)'
           }
@@ -83,7 +83,7 @@ export class VehicletypeComponent implements OnInit {
         {
           extend: 'csv',
           text: 'CSV',
-          className: ' btn-sm button btn  btn-outline-primary',
+          className: ' btn-sm button btn  btn-outline-light',
           exportOptions: {
             columns: 'th:not(:last-child)'
           }
@@ -91,7 +91,7 @@ export class VehicletypeComponent implements OnInit {
         {
           extend: 'pdf',
           text: 'PDF',
-          className: ' btn-sm button btn  btn-outline-primary',
+          className: ' btn-sm button btn  btn-outline-light',
           exportOptions: {
             columns: 'th:not(:last-child)'
           }
@@ -107,8 +107,8 @@ export class VehicletypeComponent implements OnInit {
 
   initVehicleTypeForm() {
     this.vehicleTypeForm = this.formBuilder.group({
-      vehicleTypeName: new FormControl('', [Validators.required]), 
-      isActive: new FormControl(true)
+      vehicleName : new FormControl('', [Validators.required]),
+      vehicleTypeName: new FormControl('', [Validators.required])
     })
   }
 

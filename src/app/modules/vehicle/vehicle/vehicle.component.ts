@@ -64,7 +64,7 @@ export class VehicleComponent implements OnInit {
         {
           text: 'Excel',
           extend: 'excel',
-          className: ' btn btn-sm button btn-outline-primary ',
+          className: ' btn btn-sm button btn-outline-light ',
           exportOptions: {
             columns: 'th:not(:last-child)'
           }
@@ -72,7 +72,7 @@ export class VehicleComponent implements OnInit {
         {
           extend: 'print',
           text: 'Print',
-          className: ' btn-sm button btn  btn-outline-primary ',
+          className: ' btn-sm button btn  btn-outline-light ',
           exportOptions: {
             columns: 'th:not(:last-child)'
           }
@@ -80,7 +80,7 @@ export class VehicleComponent implements OnInit {
         {
           extend: 'copy',
           text: 'Copy',
-          className: ' btn-sm button btn  btn-outline-primary ',
+          className: ' btn-sm button btn  btn-outline-light ',
           exportOptions: {
             columns: 'th:not(:last-child)'
           }
@@ -88,7 +88,7 @@ export class VehicleComponent implements OnInit {
         {
           extend: 'csv',
           text: 'CSV',
-          className: ' btn-sm button btn  btn-outline-primary',
+          className: ' btn-sm button btn  btn-outline-light',
           exportOptions: {
             columns: 'th:not(:last-child)'
           }
@@ -96,7 +96,7 @@ export class VehicleComponent implements OnInit {
         {
           extend: 'pdf',
           text: 'PDF',
-          className: ' btn-sm button btn  btn-outline-primary',
+          className: ' btn-sm button btn  btn-outline-light',
           exportOptions: {
             columns: 'th:not(:last-child)'
           }
@@ -115,8 +115,7 @@ export class VehicleComponent implements OnInit {
       fuelType: new FormControl('', [Validators.required]),
       driver: new FormControl('', [Validators.required]),
       vehicleNumber: new FormControl('', [Validators.required]),
-      vehicleType: new FormControl('', [Validators.required]),
-      isActive: new FormControl(true)
+      vehicleType: new FormControl('', [Validators.required])
     })
   }
 

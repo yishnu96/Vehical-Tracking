@@ -60,7 +60,7 @@ export class FuelComponent implements OnInit {
         {
           text: 'Excel',
           extend: 'excel',
-          className: ' btn btn-sm button btn-outline-primary ',
+          className: ' btn btn-sm button btn-outline-light ',
           exportOptions: {
             columns: 'th:not(:last-child)'
           }
@@ -68,7 +68,7 @@ export class FuelComponent implements OnInit {
         {
           extend: 'print',
           text: 'Print',
-          className: ' btn-sm button btn  btn-outline-primary ',
+          className: ' btn-sm button btn  btn-outline-light ',
           exportOptions: {
             columns: 'th:not(:last-child)'
           }
@@ -76,7 +76,7 @@ export class FuelComponent implements OnInit {
         {
           extend: 'copy',
           text: 'Copy',
-          className: ' btn-sm button btn  btn-outline-primary ',
+          className: ' btn-sm button btn  btn-outline-light ',
           exportOptions: {
             columns: 'th:not(:last-child)'
           }
@@ -84,7 +84,7 @@ export class FuelComponent implements OnInit {
         {
           extend: 'csv',
           text: 'CSV',
-          className: ' btn-sm button btn  btn-outline-primary',
+          className: ' btn-sm button btn  btn-outline-light',
           exportOptions: {
             columns: 'th:not(:last-child)'
           }
@@ -92,7 +92,7 @@ export class FuelComponent implements OnInit {
         {
           extend: 'pdf',
           text: 'PDF',
-          className: ' btn-sm button btn  btn-outline-primary',
+          className: ' btn-sm button btn  btn-outline-light',
           exportOptions: {
             columns: 'th:not(:last-child)'
           }

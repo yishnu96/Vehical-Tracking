@@ -8,15 +8,13 @@ const vehicleCreateSchema = Joi.object({
   driver: Joi.string().required().trim().lowercase(),
   fuelType: Joi.string().required().trim().lowercase(),
   vehicleType: Joi.string().required().trim().lowercase(),
-  isActive: Joi.bool().required().default(true)
 })
 
 const vehicleUpdateSchema = Joi.object({
   vehicleNumber: Joi.string().optional().trim().lowercase(),
   driver: Joi.string().optional().trim().lowercase(),
   fuelType: Joi.string().optional().trim().lowercase(),
-  vehicleType: Joi.string().optional().trim().lowercase(),
-  isActive: Joi.bool().optional()
+  vehicleType: Joi.string().optional().trim().lowercase()
 })
 
 
