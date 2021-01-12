@@ -18,7 +18,6 @@ router.get('/health-check', (req, res) =>
 
 router.use('/auth', authRoutes);
 router.use('/user', authMiddleware, userRoutes);
-router.use('/role', authMiddleware, roleRoutes);
 router.use('/fuel', authMiddleware, fuelRoutes);
 router.use('/vehicle', authMiddleware, vehicleRoutes);
 router.use('/vehicletype', authMiddleware, vehicletypeRoutes);

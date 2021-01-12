@@ -3,8 +3,6 @@ const router = require("express").Router();
 const mongodb = require('mongoose').Types;
 const helper = require('../utils/helper');
 const isEmpty = require('../utils/is-empty');
-const Role = require("../models/user-role.model");
-const RoleController = require('../controllers/user-role.controller')
 
 //GET all role
 router.get('/', async (req, res) => {

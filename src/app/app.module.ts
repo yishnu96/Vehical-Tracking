@@ -11,10 +11,8 @@ import { CatchErrorInterceptor } from './interceptors/http-error.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './modules/layout/home/home.component';
 import { HeaderComponent } from './modules/layout/header/header.component';
-import { UserRoleComponent } from './modules/user-role/user-role.component';
 import { VehicleModule } from './modules/vehicle/vehicle.module';
 import { UserModule } from './modules/user/user.module';
-import { UserRoleModule } from './modules/user-role/user-role.module';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthModule } from './modules/auth/auth.module';
 import { AgmCoreModule } from '@agm/core';
@@ -34,7 +32,6 @@ import { environment } from 'src/environments/environment';
     SharedModule,
     VehicleModule,
     UserModule,
-    UserRoleModule,
     AppRoutingModule
   ],
   declarations: [AppComponent, HeaderComponent, HomeComponent],

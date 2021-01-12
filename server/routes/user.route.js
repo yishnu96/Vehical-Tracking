@@ -8,7 +8,6 @@ const UserController = require('../controllers/user.controller')
 
 router.get("/", (req, res) => {
   User.find()
-    .populate('role')
     .then(allUsers => {
       return res.json({ status: 200, message: "All Users", errors: false, data: allUsers });
     }).

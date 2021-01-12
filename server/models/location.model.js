@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+
 const location = Schema({
     latitude: String,
     longitude: String,
@@ -8,6 +9,8 @@ const location = Schema({
     versionKey: false,
     _id: false
 })
+
+
 const locationSchema = new Schema({
     coordinates: [location],
     vehicle: { type: Schema.Types.ObjectId, ref: "vehicle" },

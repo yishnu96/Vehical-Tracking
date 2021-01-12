@@ -7,15 +7,13 @@ const userCreateSchema = Joi.object({
   fullName: Joi.string().required(),
   email: Joi.string().email().required(),
   password: Joi.string().required(),
-  role: Joi.string().required(),
-  isActive: Joi.boolean().required()
+  role: Joi.string().required()
 })
 
 const userUpdateSchema = Joi.object({
   fullName: Joi.string().optional(),
   email: Joi.string().email().optional(),
-  role: Joi.string().required(),
-  isActive: Joi.boolean().optional()
+  role: Joi.string().required()
 })
 
 const userLoginSchema = Joi.object({

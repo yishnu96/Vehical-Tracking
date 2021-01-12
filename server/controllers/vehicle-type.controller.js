@@ -4,12 +4,12 @@ const helper = require('../utils/helper');
 const vehicleType = require('../models/vehicle-type.model');
 
 const vehicleTypeCreateSchema = Joi.object({
-  vehicleTypeName: Joi.string().required().trim().lowercase(),
-  isActive: Joi.bool().required()
+  vehicleName: Joi.string().required().trim().lowercase(),
+  vehicleTypeName: Joi.string().required().trim().lowercase()
 })
 const vehicleTypeUpdateSchema = Joi.object({
-  vehicleTypeName: Joi.string().required().trim().lowercase(),
-  isActive: Joi.bool().optional()
+  vehicleName: Joi.string().required().trim().lowercase(),
+  vehicleTypeName: Joi.string().required().trim().lowercase()
 })
 
 
