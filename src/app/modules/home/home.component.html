@@ -11,13 +11,13 @@
       </agm-map>
     </div>
     <div class="col-lg-3">
-      <div class="card">
+      <div class="card ">
         <!-- <div class="card-header">
           <input type="text" placeholder="search .... " class="form-control" (keyup)="search($event)">
         </div> -->
         <div class="card-body">
           <div class="list-group">
-            <a class="list-group-item list-group-item-action " *ngFor="let vehicle of allVechicles; let i = index;">
+            <a class="list-group-item text-white list-group-item-action bg-dark" *ngFor="let vehicle of allVechicles; let i = index;">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">{{vehicle?.vehicleNumber | uppercase}}</h5>
                 <h5 class="mb-1">{{vehicle?.driver?.fullName | titlecase}}</h5>
@@ -25,7 +25,7 @@
               <p class="mb-1"> {{vehicle?.vehicleType?.vehicleName | titlecase}}  </p>
               <div class="d-flex w-100 justify-content-between">
                 <p class="mb-1">{{vehicle?.fuelType?.fuelTypeName | titlecase}}</p>
-                <button class="btn btn-sm btn-primary" (click)="getLocationOfVehicle(vehicle._id)">Track</button>
+                <button class="btn btn-sm btn-light" (click)="getLocationOfVehicle(vehicle._id)">Track</button>
               </div>
             </a>
           </div>

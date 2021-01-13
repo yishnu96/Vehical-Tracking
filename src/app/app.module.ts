@@ -1,3 +1,4 @@
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -18,6 +19,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { AgmCoreModule } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction';
 import { environment } from 'src/environments/environment';
+import { AddLocationComponent } from './modules/add-location/add-location.component';
 
 @NgModule({
   imports: [
@@ -34,7 +36,7 @@ import { environment } from 'src/environments/environment';
     UserModule,
     AppRoutingModule
   ],
-  declarations: [AppComponent, HeaderComponent, HomeComponent],
+  declarations: [AppComponent, HeaderComponent, HomeComponent, AddLocationComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
