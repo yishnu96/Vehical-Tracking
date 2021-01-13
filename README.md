@@ -1,5 +1,3 @@
-Hello this is my submission for the role of full stack developer
-This prject is based on MEAN stack
 
 This application is for Vehicle management and Tracking.
 
@@ -18,6 +16,3 @@ ng serve // to run frontend
 
 ### Run App
 visit to localhost:4200
-
-### Credits 
-- This Project was created by Vaibhav S Thangriyal.

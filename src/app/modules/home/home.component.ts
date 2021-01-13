@@ -45,21 +45,21 @@ export class HomeComponent implements OnInit {
   }
 
   getLocationOfVehicle(id) {
-    this.markerArray.length = 0;
+    this.markerArray = [];
     this.mainService.getLocations(id).subscribe((res: any) => {
       console.log(res);
       if (res.data) {
         let locationArray = res.data.coordinates;
         if (locationArray.length) {
-          this.markerArray = res.data.coordinates;
-          this.currentLocation = {
-            lat: locationArray[locationArray.length - 1].latitude,
-            lng: locationArray[locationArray.length - 1].longitude
-          }
+          // this.markerArray = res.data.coordinates;
+          // this.currentLocation = {
+          //   lat: locationArray[locationArray.length - 1].latitude,
+          //   lng: locationArray[locationArray.length - 1].longitude
+          // }
           let origin = { lat: Number(locationArray[0].latitude), lng: Number(locationArray[0].longitude) };
           let destination = { lat: Number(locationArray[locationArray.length - 1].latitude), lng: Number(locationArray[locationArray.length - 1].longitude) };
           this.route = { origin: origin, destination: destination };
-          console.log(this.route.origin)
+          console.log(origin , destination)
           this.mapsOption.zoom = 12;
         } else {
           this.toasterService.info('No location Found for Selected Vechicle', 'No Location Found')
@@ -70,15 +70,5 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  search(event) {
-    let text = event.target.value;
-    let vehicleArray = [...this.allVechiclesOriginal];
-    if (text.length) {
-      this.allVechicles = vehicleArray.filter(vehicle => (vehicle.vehicleNumber).includes(text));
-    } else {
-      this.allVechicles = [];
-      this.allVechicles = [...this.allVechiclesOriginal];
-    }
-  }
 
 }

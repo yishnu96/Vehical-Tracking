@@ -6,9 +6,10 @@ const locationSchema = Joi.object({
     longitude: Joi.string().required()
 })
 
-module.exports = {
-    verifyLocation
-}
 
 function verifyLocation(area) { return helper.validator(area, locationSchema) }
 
+
+module.exports = {
+  verifyLocation
+}

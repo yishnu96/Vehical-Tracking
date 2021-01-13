@@ -27,7 +27,7 @@ router.get("/vehicle/:id", (req, res) => {
     if (mongodb.ObjectId(req.params.id)) {
         Location
             .findOne({ vehicle: req.params.id })
-            .populate("driver", "-password")
+            // .populate("driver", "-password")
             .exec()
             .then(docs => {
                 res.json({ status: 200, data: docs, errors: false, message: "All Locations Users" });
