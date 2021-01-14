@@ -93,6 +93,7 @@ export class MainService {
     return this.http.delete(this.fuelUrl + '/' + id, { headers: this.headers });
   }
 
+  //Locations
   getLocations(id) {
     return this.http.get(this.localtionUrl + '/vehicle/' + id, { headers: this.headers });
   }

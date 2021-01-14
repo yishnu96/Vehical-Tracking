@@ -6,8 +6,9 @@ const VehicleSchema = new mongoose.Schema({
   fuelType: { type: mongoose.Schema.Types.ObjectId, ref: "FuelType", required: true },
   vehicleNumber: { type: String, required: true, lowercase: true, trim: true },
   vehicleType: { type: mongoose.Schema.Types.ObjectId, ref: "VehicleType", required: true },
-  latitude: { type: String },
-  longitutde: { type: String },
+  // latitude: { type: String },
+  // longitutde: { type: String },
+  coodinates: [{ type: mongoose.Schema.Types.ObjectId, ref: "coodinates" }]
 }, {
   versionKey: false
 });

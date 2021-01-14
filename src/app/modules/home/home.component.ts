@@ -51,11 +51,11 @@ export class HomeComponent implements OnInit {
       if (res.data) {
         let locationArray = res.data.coordinates;
         if (locationArray.length) {
-          // this.markerArray = res.data.coordinates;
-          // this.currentLocation = {
-          //   lat: locationArray[locationArray.length - 1].latitude,
-          //   lng: locationArray[locationArray.length - 1].longitude
-          // }
+          this.markerArray = res.data.coordinates;
+          this.currentLocation = {
+            lat: locationArray[locationArray.length - 1].latitude,
+            lng: locationArray[locationArray.length - 1].longitude
+          }
           let origin = { lat: Number(locationArray[0].latitude), lng: Number(locationArray[0].longitude) };
           let destination = { lat: Number(locationArray[locationArray.length - 1].latitude), lng: Number(locationArray[locationArray.length - 1].longitude) };
           this.route = { origin: origin, destination: destination };

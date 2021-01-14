@@ -41,28 +41,39 @@
       <div class=" col-sm-12 col-md-12 col-xl-4">
         <div class="mt-5">
           <div class="form-group row">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" style="width: 15vh;" id="basic-addon3">Venue<span
-                    class="text-danger">*</span></span>
-              </div>
-              <input type="text" class="form-control" id="eventVenue" (keydown.enter)="findCoordinates($event)">
+            <div class="form-group text-center col-12">
+              <label for="exampleInputEmail1"><b>Vehicle Type </b> </label>
+              <select name="" id="" class="form-control" formControlName="vehicle" required>
+                <option value="" selected disabled>Select Vechicle Type</option>
+                <option value="{{vehicle._id}}" *ngFor="let vehicle of allVehicles; let i = index;">
+                  <b> {{vehicle?.vehicleNumber | uppercase}} </b> &emsp; | {{vehicle?.vehicleType?.vehicleName}}
+                </option>
+              </select>
             </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" style="width: 15vh;" id="basic-addon3">Latitude</span>
+            <div formGroupName="coordinates">>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" style="width: 15vh;" id="basic-addon3">Venue<span
+                      class="text-danger">*</span></span>
+                </div>
+                <input type="text" class="form-control" id="eventVenue" (keydown.enter)="findCoordinates($event)">
               </div>
-              <input type="text" class="form-control d-inline" id="latitude" formControlName="latitude"
-                placeholder="Range Between -180 to 180">
-            </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" style="width: 15vh;" id="basic-addon3">Longitude</span>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" style="width: 15vh;" id="basic-addon3">Latitude</span>
+                </div>
+                <input type="text" class="form-control d-inline" id="latitude" formControlName="latitude"
+                  placeholder="Range Between -180 to 180">
               </div>
-              <input type="text" class="form-control" id="longitude" formControlName="longitude"
-                placeholder="Range Between -180 to 180">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" style="width: 15vh;" id="basic-addon3">Longitude</span>
+                </div>
+                <input type="text" class="form-control" id="longitude" formControlName="longitude"
+                  placeholder="Range Between -180 to 180">
+              </div>
             </div>
-            <button type="submit" class="btn btn-dark"> Add Location </button>
+            <button type="submit" class="center btn btn-dark"> Add Location </button>
           </div>
         </div>
       </div>

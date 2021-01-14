@@ -165,7 +165,7 @@ export class VehicleComponent implements OnInit {
   }
 
   addVehicle(fuel: any) {
-    console.log(fuel)
+    console.log(fuel);
     this.mainService.addVehicle(fuel).subscribe((res: any) => {
       console.log(res);
       jQuery('#modal3').modal('hide');

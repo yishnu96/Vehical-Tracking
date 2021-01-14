@@ -2,8 +2,12 @@ const Joi = require('joi');
 const helper = require('../utils/helper');
 
 const locationSchema = Joi.object({
-    latitude: Joi.string().required(),
-    longitude: Joi.string().required()
+  vehicle: Joi.string().required(),
+  coordinates: Joi.object({
+    latitude: Joi.number().required(),
+    longitude: Joi.number().required()
+  })
+
 })
 
 

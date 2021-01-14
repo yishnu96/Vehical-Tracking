@@ -18,4 +18,9 @@ const locationSchema = new Schema({
 },
     { versionKey: false });
 
+
 module.exports = mongoose.model('location', locationSchema);
+// module.exports {
+//   mongoose.model('location', locationSchema);
+//   mongoose.model('coodinates', location);
+// }
