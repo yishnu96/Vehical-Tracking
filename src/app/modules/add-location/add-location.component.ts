@@ -47,7 +47,7 @@ export class AddLocationComponent implements OnInit {
 
   getCurrentLocation() {
     navigator.geolocation.getCurrentPosition(res => {
-      console.log(res)
+      console.log(res);
       this.lat = res.coords.latitude;
       this.long = res.coords.longitude;
     });
